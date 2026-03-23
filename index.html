@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Customer Manager | Metro</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Client_Database</h1>
+      <form action="/cadastrar" method="POST">
+        <input type="text" name="nome" placeholder="Full Name" required />
+        <input type="email" name="email" placeholder="Email Address" required />
+        <input type="text" name="telefone" placeholder="Phone Number" />
+        <button type="submit">Add New Entry</button>
+      </form>
+
+      <table>
+        <thead>
+          <tr>
+            <th>User_Name</th>
+            <th>Email</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for cliente in clientes %}
+          <tr>
+            <td>{{ cliente[1] }}</td>
+            <td>{{ cliente[2] }}</td>
+            <td>
+              <button
+                class="btn-phone"
+                onclick="verTelefone('{{ cliente[1] }}', '{{ cliente[3] }}')"
+              >
+                TEL
+              </button>
+              <a href="/editar/{{ cliente[0] }}" class="btn-editar">EDIT</a>
+              <a
+                href="/excluir/{{ cliente[0] }}"
+                class="btn-excluir"
+                onclick="return confirm('Confirm deletion?');"
+                >DEL</a
+              >
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+  </body>
+</html>
